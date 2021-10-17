@@ -1,0 +1,12 @@
+name: pull_request
+
+on: [pull_request]
+
+jobs:
+  pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: ./.github/actions/hello-world/action.yaml # actions/checkout@v2
+        run:
+        shell:
