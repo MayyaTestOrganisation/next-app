@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hi, Mayya!"
-      - name: say hi to Mayya
+        name: say hi to Mayya
