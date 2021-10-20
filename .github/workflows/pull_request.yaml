@@ -9,3 +9,8 @@ jobs:
     steps: # job would run these steps
       - name: say hello world
         run: echo "Hello world!"
+  hello-mayya-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hi, Mayya!"
+      - name: say hi to Mayya
