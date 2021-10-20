@@ -1,24 +1,24 @@
-# trigger an event in GH
-name: hello-world
+# # trigger an event in GH
+# name: hello-world
 
-on: [push] # trigger on push
+# on: [push] # trigger on push
 
-jobs: # run together if not mentioned
-  hello-world-job:
-    runs-on: ubuntu-latest # on which env to run this job       [self-hosted] if we dhave defined runners
-    steps: # job would run these steps
-      - name: checkout # this would allow using our custom actions
-        uses: actions/checkout@v2
+# jobs: # run together if not mentioned
+#   hello-world-job:
+#     runs-on: ubuntu-latest # on which env to run this job       [self-hosted] if we dhave defined runners
+#     steps: # job would run these steps
+#       - name: checkout # this would allow using our custom actions
+#         uses: actions/checkout@v2
 
           
-      - name: say hello world
-        uses: ./.github/actions/hello-world
-        with:
-          my_input: "Hello from inputs!"
+#       - name: say hello world
+#         uses: ./.github/actions/hello-world
+#         with:
+#           my_input: "Hello from inputs!"
 
-  hello-mayya-job:
-    needs: [hello-world-job] # will wait for the first job
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Hi, Mayya!"
-        name: say hi to Mayya
+#   hello-mayya-job:
+#     needs: [hello-world-job] # will wait for the first job
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Hi, Mayya!"
+#         name: say hi to Mayya

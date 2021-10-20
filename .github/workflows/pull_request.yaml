@@ -1,0 +1,21 @@
+name: pull_request
+
+on: [pull_request]
+
+jobs:
+  test-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # by default the latest commit
+
+      - name: install deps
+        run: yarn install
+
+      - name: lint
+        run: yarn lint
+
+      - name: test
+        run: yarn test
+
+      - name: build
+        run: yarn build
