@@ -1,0 +1,10 @@
+name: hello-world-action
+
+description: "hello world action"
+
+runs:
+  using: composite # can be JS code, Docker / bash commands ...      composite => Docker & JS
+  steps:
+    - name: say "hello world action"
+      run: echo "Hello world"
+      shell: bash
