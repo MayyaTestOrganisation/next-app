@@ -3,13 +3,14 @@ name: hello-world
 
 on: [push] # trigger on push
 
-jobs:
+jobs: # runs together if not mentioned
   hello-world-job:
     runs-on: ubuntu-latest # on which env to run this job       [self-hosted] if we dhave defined runners
     steps: # job would run these steps
       - name: say hello world
         run: echo "Hello world!"
   hello-mayya-job:
+    needs: [hello-world-job] # will wait for the first job
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hi, Mayya!"
