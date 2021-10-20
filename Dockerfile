@@ -1,5 +1,5 @@
 # base image => alpine is the smallest version of node
-FROM node:14.17.4-alpine 
+FROM node:14.17.0-alpine 
 
 # WORKDIR /the/workdir/path => keep the root of the container clean
 WORKDIR /workdir
