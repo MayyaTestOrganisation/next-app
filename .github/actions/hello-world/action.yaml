@@ -2,9 +2,15 @@ name: hello-world-action
 
 description: "hello world action"
 
+inputs:
+  my_input:
+    description: "my test input"
+    required: true
+    # default: "1" 
+
 runs:
   using: composite # can be JS code, Docker / bash commands ...      composite => Docker & JS
   steps:
     - name: say "hello world action"
-      run: echo "Hello world"
+      run: echo "${{ inputs.my_input }}"
       shell: bash

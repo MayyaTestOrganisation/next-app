@@ -10,8 +10,11 @@ jobs: # run together if not mentioned
       - name: checkout 
         uses: actions/checkout@v2
 
+          
       - name: say hello world
         uses: ./.github/actions/hello-world
+        with:
+          my_input: "Hello from inputs!"
 
   hello-mayya-job:
     needs: [hello-world-job] # will wait for the first job
