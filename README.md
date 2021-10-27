@@ -2,56 +2,81 @@
 
 ## docker build image
 
+```sh
+docker build --tag <app-name>:<tag> <path-to-Dockerfile>
 ```
-docker build --tag <app-name>:<tag> .
-```
+
+- path-to-Dockerfile - **.**
 
 ## docker run container
 
-```
+```sh
 docker run --publish <host port>:<container port> <app-name>:<tag>
 ```
 
 ## gcloud login
 
-```
+```sh
 gcloud auth login
 ```
 
-## gcloud config project
+## gcloud set project as default\*
 
-```
-gcloud config set project <projectId>
-```
+\*otherwise `use --project <project-id>` on every command
 
-- projectId - swift-radar-328507
-
-## auth in docker
-
-```
-gcloud auth configure-docker europe-west3-docker.pkg.dev
+```sh
+gcloud config set project <project-id>
 ```
 
-##
+- project-id - **swift-radar-328507**
 
-```
-docker build --tag europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-app/next-app:v1.0 .
-```
+## configure docker for gcp artifact registry using gcloud
 
-##
-
-```
-docker push europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-app/next-app:v1.0
+```sh
+gcloud auth configure-docker <registry-id>
 ```
 
-Prepare a release:
+- registry-id - **europe-west3-docker.pkg.dev**
 
-- we have a stable version => create a tag
+## build image
 
-git tag <name> // create tag
+```sh
+docker build --tag <registry-id>/<project-id>/docker/<app-name>:<version> <path-to-Dockerfile>
+```
 
-git push origin --tags // push tags git push v1.0.0 // push a tag
+- registry-id - **europe-west3-docker.pkg.dev**
+- project-id - **swift-radar-328507**
+- app-name - **next-app**
+- version - **v.x.x.x**
+- path-to-Dockerfile - **.**
 
-- create a release action
+## push docker image to artifact registry
 
-- make the release: in GH => create new release, choose the tag => the action runs
+```sh
+docker push <registry-id>/<project-id>/docker/<app-name>:<version>
+```
+
+- registry-id - **europe-west3-docker.pkg.dev**
+- project-id - **swift-radar-328507**
+- app-name - **next-app**
+- version - **v.x.x.x**
+
+## create a tag
+
+```sh
+git tag <name>
+```
+
+## push the tag/tags
+
+### - all tags
+
+```sh
+git push origin --tags
+```
+
+### - single tag
+
+```sh
+git push <name>
+```
