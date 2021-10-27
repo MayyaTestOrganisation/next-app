@@ -1,0 +1,29 @@
+name: release
+
+on:
+  release:
+    types: [published]
+
+env: 
+  GCP_REGISTRY: europe-west3-docker.pkg.dev
+  GCP_PROJECT_ID: swift-radar-328507 # run gcloud projects list
+  APP_NAME: next-app
+  VERSION: ${{ github.events.release.tag_name }}
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+
+      - name: log github context
+        env: 
+          GIT_HUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "${{ GIT_HUB_CONTEXT }}"
+
+      - name: build docker image
+        run: docker build --tag ${{ env.GCP_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/docker/${{ env.APP_NAME }}:${{ env.VERSION }} .
+
+      - name: push docker image
+        run: docker push ${{ env.GCP_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/docker/${{ env.APP_NAME }}:${{ env.VERSION }}
