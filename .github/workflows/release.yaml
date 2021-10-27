@@ -6,7 +6,7 @@ on:
 
 env: 
   GCP_REGISTRY: europe-west3-docker.pkg.dev
-  GCP_PROJECT_ID: swift-radar-328507 # run gcloud projects list
+  GCP_PROJECT_ID: swift-radar-328507 # run gcloud projects list to see it
   APP_NAME: next-app
   VERSION: ${{ github.event.release.tag_name }}
 
@@ -17,8 +17,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2 
 
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }} # service account key from organisation secrets
+          export_default_credentials: true
+
       - name: log github context
         run: echo "${{ toJson(github) }}"
+
+      - name: configure docker (gcloud auth)
+        run: gcloud auth configure-docker ${{ env.GCP_REGISTRY }}
 
       - name: build docker image
         run: docker build --tag ${{ env.GCP_REGISTRY }}/${{ env.GCP_PROJECT_ID }}/docker/${{ env.APP_NAME }}:${{ env.VERSION }} .
