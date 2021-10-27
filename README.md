@@ -43,3 +43,15 @@ docker build --tag europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-ap
 ```
 docker push europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-app/next-app:v1.0
 ```
+
+Prepare a release:
+
+- we have a stable version => create a tag
+
+git tag <name> // create tag
+
+git push origin --tags // push tags git push v1.0.0 // push a tag
+
+- create a release action
+
+- make the release: in GH => create new release, choose the tag => the action runs
