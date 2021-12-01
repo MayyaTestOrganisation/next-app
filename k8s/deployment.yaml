@@ -1,0 +1,46 @@
+# apiVersion and kind is a pair and depends on the kubernetes
+# version we are installing this on. Essentially, the resources
+# that k8s supports are brought out in stages:
+# * alpha ( eg. apps/v1alpha1 )
+# * beta ( eg. apps/v1beta1 )
+# * stable ( eg. apps/v1 )
+# For instance, in Kubernetes 1.16 Deployments moved from apps/v1beta2 to apps/v1
+# To get a list of apiVersion - kind pairs for your currently installed kubernetes
+# do kubectl api-resources
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  # useful when fetching resources ( eg. kubectl get deployment next-app-deployment )
+  name: next-app-deployment
+
+  # labels can be arbitrary kv pairs that we can later use
+  # to identify resources on kubernetes, example below
+  labels:
+    app: next-app
+
+spec:
+  # how many pods to keep up
+  replicas: 3
+
+  # which pods are managed by this deployment is decided
+  # by supplying a minimal subset of labels that should
+  # be present on the pod
+  selector:
+    matchLabels:
+      app: next-app
+
+  template:
+    # pod labels; this means that anyone looking for a 
+    # resouce with app: next-app as a label will find our pod
+    metadata:
+      labels:
+        app: next-app
+
+    spec:
+      containers:
+        - name: next-app-container
+          image: europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-app:v1.0.4
+          ports:
+          - name: next-app-port
+            containerPort: 3000
