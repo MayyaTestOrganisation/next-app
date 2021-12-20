@@ -31,7 +31,7 @@ spec:
       app: next-app
 
   template:
-    # pod labels; this means that anyone looking for a 
+    # pod labels; this means that anyone looking for a
     # resouce with app: next-app as a label will find our pod
     metadata:
       labels:
@@ -42,5 +42,10 @@ spec:
         - name: next-app-container
           image: europe-west3-docker.pkg.dev/swift-radar-328507/docker/next-app:v1.0.4
           ports:
-          - name: next-app-port
-            containerPort: 3000
+            - name: next-app-port
+              containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.env.NODE_ENV }}
+            - name: DB_CONNECTION_STRING
+              value: {{ .Values.env.DB_CONNECTION_STRING }}

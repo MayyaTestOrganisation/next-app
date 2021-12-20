@@ -166,3 +166,43 @@ kubectl get pods
 6. delete user: kubectl config delete-user gke_swift-radar-328507_europe-west1-b_simple-cluster
 
 ---
+
+Helm:
+
+- easy way to set up config files (with k8s - many files for each env)
+- easy way to merge the config files (with k8s: apply each file), 1 default file which is ovverrdien for each env (by helm chart)
+
+Each chart has own version
+
+helm/templates:
+
+- helpers file: functions for formatting, etc.
+- deployment.yaml:
+
+---
+
+- initialize helm chart: helm create next-app
+
+- delete not-needed files
+- in Chart.yaml - change versions
+- delete service, deployment, values code
+- copy from k8s to helm files
+- replace values: .Values.env.DB_CONNECTION_STRING
+- link the resourses in the chart:
+
+```sh
+helm install --dry-run next-app-chart ./helm/next-app/ --values ./helm/next-app/values.yaml
+```
+
+- to override values in chart:
+```sh
+$ helm install --dry-run next-app-chart ./helm/next-app/ --values ./helm/next-app/values.yaml --values ./helm/next-app/values-development.yaml
+```
+- to push the chart, zip it:
+```sh
+helm chart save ./helm/next-app next-app-chart
+```
+
+- helm auth:
+in gcloud - iam -> add another K8s role
+helm registry login -u  
