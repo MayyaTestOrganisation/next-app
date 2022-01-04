@@ -13,9 +13,12 @@ function Mayya() {
   return data.length > 0 
     ? <div>
         {data.map((paragraph) => (
-          <p key={paragraph}>
-            {paragraph}
-          </p>
+          <div 
+            key={paragraph} 
+            dangerouslySetInnerHTML={{ 
+              __html: paragraph 
+            }} 
+          />
         ))}
       </div> 
     : null
